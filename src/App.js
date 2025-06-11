@@ -146,7 +146,7 @@ function App() {
 
   // Fetch IP-based location
   useEffect(() => {
-    fetch("/api/get-ip-location")
+    fetch("https://corsproxy.io/?https://ipapi.co/json/")
       .then((res) => res.json())
       .then((data) => setIpLocation({
         ...data,
