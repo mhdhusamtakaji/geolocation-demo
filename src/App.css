@@ -1,38 +1,165 @@
-.App {
+/* Global Styles */
+:root {
+  --primary-color: #4a6fa5;
+  --secondary-color: #6c757d;
+  --success-color: #28a745;
+  --error-color: #dc3545;
+  --background-color: #f8f9fa;
+  --card-bg: #ffffff;
+  --text-color: #212529;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  line-height: 1.6;
+  color: var(--text-color);
+  background-color: var(--background-color);
+}
+
+/* Layout */
+.app-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.app-header {
   text-align: center;
+  margin-bottom: 30px;
+  padding: 20px 0;
+  border-bottom: 1px solid #e1e4e8;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.app-header h1 {
+  color: var(--primary-color);
+  margin-bottom: 10px;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
+.main-content {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 30px;
+}
+
+@media (min-width: 992px) {
+  .main-content {
+    grid-template-columns: 2fr 1fr;
   }
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+/* Map Section */
+.map-section {
+  background: var(--card-bg);
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+/* Controls Section */
+.controls-section {
   display: flex;
   flex-direction: column;
+  gap: 20px;
+}
+
+.location-card {
+  background: var(--card-bg);
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.location-card h2 {
+  color: var(--primary-color);
+  margin-bottom: 15px;
+  font-size: 1.3rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.location-details {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.location-details p {
+  margin: 0;
+  font-size: 0.95rem;
+}
+
+/* Buttons */
+.gps-button {
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.95rem;
+  font-weight: 500;
+  width: 100%;
+  margin-bottom: 15px;
+  transition: background-color 0.2s ease;
+  display: flex;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  gap: 8px;
 }
 
-.App-link {
-  color: #61dafb;
+.gps-button:hover {
+  background-color: #3a5a8c;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+/* Info Windows */
+.gm-style .gm-style-iw {
+  padding: 10px;
+}
+
+.gm-style-iw h3 {
+  margin: 0 0 8px 0;
+  color: var(--primary-color);
+}
+
+.gm-style-iw p {
+  margin: 4px 0;
+  font-size: 0.9rem;
+}
+
+/* Error Message */
+.error-message {
+  color: var(--error-color);
+  margin-top: 10px;
+  font-size: 0.9rem;
+}
+
+/* Loading State */
+p {
+  color: var(--secondary-color);
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .app-container {
+    padding: 15px;
   }
-  to {
-    transform: rotate(360deg);
+  
+  .app-header h1 {
+    font-size: 1.5rem;
+  }
+  
+  .location-card {
+    padding: 15px;
+  }
+  
+  .gps-button {
+    padding: 8px 12px;
   }
 }
