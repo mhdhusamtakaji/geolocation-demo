@@ -146,7 +146,7 @@ function App() {
 
   // Fetch IP-based location
   useEffect(() => {
-    fetch("https://corsproxy.io/?https://ipapi.co/json/")
+    fetch("/api/get-ip-location")
       .then((res) => res.json())
       .then((data) => setIpLocation({
         ...data,
@@ -308,7 +308,7 @@ function App() {
               <LocationDetailsP><strong>Accuracy:</strong> {gpsLocation.accuracy !== null && gpsLocation.accuracy !== undefined ? `${Math.round(gpsLocation.accuracy)} meters` : 'N/A'}</LocationDetailsP>
               <LocationDetailsP><strong>Latitude:</strong> {gpsLocation.latitude !== null && gpsLocation.latitude !== undefined ? gpsLocation.latitude.toFixed(6) : 'N/A'}</LocationDetailsP>
               <LocationDetailsP><strong>Longitude:</strong> {gpsLocation.longitude !== null && gpsLocation.longitude !== undefined ? gpsLocation.longitude.toFixed(6) : 'N/A'}</LocationDetailsP>
-              {/* <LocationDetailsP><strong>Altitude:</strong> {gpsLocation.altitude ? `${gpsLocation.altitude.toFixed(2)} meters` : 'N/A'}</LocationDetailsP> */}
+              <LocationDetailsP><strong>Altitude:</strong> {gpsLocation.altitude ? `${gpsLocation.altitude.toFixed(2)} meters` : 'N/A'}</LocationDetailsP>
             </LocationDetails>
           ) : gpsError ? (
             <ErrorMessage>Error: {gpsError}</ErrorMessage>
