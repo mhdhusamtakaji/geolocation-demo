@@ -5,8 +5,8 @@ import styled from 'styled-components';
 const containerStyle = {
   width: '100%',
   height: '400px',
-  borderRadius: '8px',
-  boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
+  borderRadius: '10px',
+  boxShadow: '0 4px 8px rgba(0,0,0,0.1)'
 };
 
 const defaultCenter = {
@@ -15,19 +15,35 @@ const defaultCenter = {
 };
 
 const AppContainer = styled.div`
-  max-width: 900px; /* Reduced width */
-  margin: 0 auto;
-  padding: 20px;
-  font-family: 'Segoe UI, Tahoma, Geneva, Verdana, sans-serif';
+  max-width: 1000px; /* Adjusted max-width for a good balance */
+  margin: 50px auto; /* More vertical margin */
+  padding: 40px; /* Increased padding */
+  font-family: 'Roboto', sans-serif; /* Changed font to Roboto */
   background-color: #f8f9fa;
-  color: #212529;
+  color: #343a40;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+  overflow: hidden;
 `;
 
 const AppHeader = styled.header`
   text-align: center;
-  margin-bottom: 30px;
-  padding: 20px 0;
-  border-bottom: 1px solid #e1e4e8;
+  margin-bottom: 50px; /* More margin */
+  padding-bottom: 20px;
+  border-bottom: 2px solid #e9ecef;
+
+  h1 {
+    color: #4a6fa5;
+    margin-bottom: 15px;
+    font-size: 3rem;
+    font-weight: 700;
+  }
+
+  p {
+    color: #6c757d;
+    font-size: 1.2rem;
+    margin-top: 10px;
+  }
 `;
 
 const AppHeaderH1 = styled.h1`
@@ -38,17 +54,17 @@ const AppHeaderH1 = styled.h1`
 const MainContent = styled.main`
   display: grid;
   grid-template-columns: 1fr; /* Default for small screens */
-  gap: 30px;
+  gap: 40px;
 
   @media (min-width: 992px) {
-    grid-template-columns: 1fr 2fr 1fr; /* Left sidebar, map, right sidebar */
+    grid-template-columns: 1fr 2fr 1fr; /* IP Location | Map | GPS Location */
   }
 `;
 
 const MapSection = styled.section`
   background: #ffffff;
-  border-radius: 8px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   overflow: hidden;
 
   @media (min-width: 992px) {
@@ -58,13 +74,32 @@ const MapSection = styled.section`
 
 const LocationCard = styled.div`
   background: #ffffff;
-  border-radius: 8px;
-  padding: 20px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  padding: 30px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  transition: transform 0.2s ease-in-out;
+
+  &:hover {
+    transform: translateY(-5px);
+  }
 
   @media (min-width: 992px) {
     ${props => props.type === 'ip' && `grid-column: 1 / 2;`} /* IP Location on Left */
     ${props => props.type === 'gps' && `grid-column: 3 / 4;`} /* GPS Location on Right */
+  }
+
+  h2 {
+    color: #4a6fa5;
+    margin-bottom: 25px;
+    font-size: 1.8rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 10px;
   }
 `;
 
@@ -80,7 +115,18 @@ const LocationCardH2 = styled.h2`
 const LocationDetails = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 15px;
+  width: 100%;
+
+  p {
+    margin: 0;
+    font-size: 1.05rem;
+    color: #495057;
+    strong {
+      color: #343a40;
+      font-weight: 700;
+    }
+  }
 `;
 
 const LocationDetailsP = styled.p`
@@ -89,52 +135,61 @@ const LocationDetailsP = styled.p`
 `;
 
 const GpsButton = styled.button`
-  background-color: #4a6fa5;
+  background-color: #28a745; /* Green for action */
   color: white;
   border: none;
-  padding: 10px 15px;
-  border-radius: 4px;
+  padding: 15px 25px;
+  border-radius: 8px;
   cursor: pointer;
-  font-size: 0.95rem;
-  font-weight: 500;
+  font-size: 1.1rem;
+  font-weight: 600;
   width: 100%;
-  margin-bottom: 15px;
-  transition: background-color 0.2s ease;
+  margin-top: 20px;
+  transition: background-color 0.3s ease, transform 0.2s ease;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
+  gap: 10px;
 
   &:hover {
-    background-color: #3a5a8c;
+    background-color: #218838;
+    transform: translateY(-3px);
+  }
+
+  &:active {
+    transform: translateY(0);
   }
 `;
 
 const ErrorMessage = styled.p`
   color: #dc3545;
-  margin-top: 10px;
-  font-size: 0.9rem;
+  margin-top: 20px;
+  font-size: 1.1rem;
+  font-weight: bold;
 `;
 
 const Legend = styled.div`
-  margin-top: 15px;
+  margin-top: 30px;
   display: flex;
   justify-content: center;
-  gap: 20px;
-  font-size: 0.9rem;
+  flex-wrap: wrap;
+  gap: 30px;
+  font-size: 1.05rem;
+  color: #555;
 
   span {
     display: flex;
     align-items: center;
-    gap: 5px;
+    gap: 8px;
   }
 `;
 
 const MarkerIcon = styled.span`
-  width: 10px;
-  height: 10px;
+  width: 16px;
+  height: 16px;
   border-radius: 50%;
   background-color: ${props => props.color};
+  border: 1px solid rgba(0,0,0,0.2);
 `;
 
 function App() {
@@ -165,10 +220,6 @@ function App() {
     navigator.geolocation.getCurrentPosition(
       (position) => {
         const coords = position.coords;
-        console.log('GPS Coordinates:', coords);
-        console.log('Type of accuracy:', typeof coords.accuracy);
-        console.log('Type of latitude:', typeof coords.latitude);
-        console.log('Type of longitude:', typeof coords.longitude);
         setGpsLocation({
           accuracy: coords.accuracy,
           latitude: coords.latitude,
@@ -177,13 +228,6 @@ function App() {
           position: { lat: coords.latitude, lng: coords.longitude }
         });
         setGpsError(null);
-        console.log('gpsLocation after set:', {
-          accuracy: coords.accuracy,
-          latitude: coords.latitude,
-          longitude: coords.longitude,
-          altitude: coords.altitude,
-          position: { lat: coords.latitude, lng: coords.longitude }
-        });
         
         // Pan to user's location
         if (map) {
@@ -288,6 +332,7 @@ function App() {
                         <p>Accuracy: {Math.round(gpsLocation.accuracy)} meters</p>
                         <p>Lat: {gpsLocation.latitude?.toFixed(6) || 'N/A'}</p>
                         <p>Lng: {gpsLocation.longitude?.toFixed(6) || 'N/A'}</p>
+                        <p>Altitude: {gpsLocation.altitude ? `${gpsLocation.altitude.toFixed(2)} meters` : 'N/A'}</p>
                       </div>
                     </InfoWindow>
                   )}
@@ -308,7 +353,7 @@ function App() {
               <LocationDetailsP><strong>Accuracy:</strong> {gpsLocation.accuracy !== null && gpsLocation.accuracy !== undefined ? `${Math.round(gpsLocation.accuracy)} meters` : 'N/A'}</LocationDetailsP>
               <LocationDetailsP><strong>Latitude:</strong> {gpsLocation.latitude !== null && gpsLocation.latitude !== undefined ? gpsLocation.latitude.toFixed(6) : 'N/A'}</LocationDetailsP>
               <LocationDetailsP><strong>Longitude:</strong> {gpsLocation.longitude !== null && gpsLocation.longitude !== undefined ? gpsLocation.longitude.toFixed(6) : 'N/A'}</LocationDetailsP>
-              {/* <LocationDetailsP><strong>Altitude:</strong> {gpsLocation.altitude ? `${gpsLocation.altitude.toFixed(2)} meters` : 'N/A'}</LocationDetailsP> */}
+              <LocationDetailsP><strong>Altitude:</strong> {gpsLocation.altitude ? `${gpsLocation.altitude.toFixed(2)} meters` : 'N/A'}</LocationDetailsP>
             </LocationDetails>
           ) : gpsError ? (
             <ErrorMessage>Error: {gpsError}</ErrorMessage>
