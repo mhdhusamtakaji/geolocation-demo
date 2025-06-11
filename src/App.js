@@ -24,13 +24,33 @@ function App() {
 
   // Fetch IP-based location
   useEffect(() => {
-    fetch("https://corsproxy.io/?https://ipapi.co/json/")
-      .then((res) => res.json())
-      .then((data) => setIpLocation({
-        ...data,
-        position: { lat: data.latitude, lng: data.longitude }
-      }))
-      .catch((err) => console.error("IPAPI error:", err));
+    const fetchIpLocation = async () => {
+      try {
+        const response = await fetch("https://corsproxy.io/?https://ipapi.co/json/");
+        
+        if (!response.ok) {
+          if (response.status === 429) {
+            throw new Error('Rate limit exceeded for IP location service. Please try again later.');
+          }
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        
+        const data = await response.json();
+        setIpLocation({
+          ...data,
+          position: { lat: data.latitude, lng: data.longitude }
+        });
+      } catch (err) {
+        console.error("IPAPI error:", err);
+        // Fallback to a default location or show error message
+        setIpLocation({
+          error: err.message || 'Failed to fetch IP location',
+          position: { lat: 0, lng: 0 } // Default position
+        });
+      }
+    };
+
+    fetchIpLocation();
   }, []);
 
   // Request GPS location
@@ -99,13 +119,22 @@ function App() {
         <div className="location-card ip-location">
           <h2 className="location-card-title">🌐 IP-Based Location</h2>
           {ipLocation ? (
-            <div className="location-details">
-              <p><strong>IP:</strong> {ipLocation.ip}</p>
-              <p><strong>City:</strong> {ipLocation.city}</p>
-              <p><strong>Region:</strong> {ipLocation.region}</p>
-              <p><strong>Country:</strong> {ipLocation.country_name}</p>
-              <p><strong>Coordinates:</strong> {ipLocation.latitude}, {ipLocation.longitude}</p>
-            </div>
+            ipLocation.error ? (
+              <div className="error-message">
+                <p>{ipLocation.error}</p>
+                <p>Using default location (0,0)</p>
+              </div>
+            ) : (
+              <div className="location-details">
+                <p><strong>IP:</strong> {ipLocation.ip || 'N/A'}</p>
+                <p><strong>ISP:</strong> {ipLocation.org || 'N/A'}</p>
+                <p><strong>City:</strong> {ipLocation.city || 'N/A'}</p>
+                <p><strong>Region:</strong> {ipLocation.region || 'N/A'}</p>
+                <p><strong>Country:</strong> {ipLocation.country_name || 'N/A'}</p>
+                <p><strong>Latitude:</strong> {ipLocation.latitude || 'N/A'}</p>
+                <p><strong>Longitude:</strong> {ipLocation.longitude || 'N/A'}</p>
+              </div>
+            )
           ) : (
             <p>Loading IP location...</p>
           )}
